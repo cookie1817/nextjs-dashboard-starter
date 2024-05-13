@@ -1,0 +1,51 @@
+{
+    "signup": "Sign Up",
+    "actions": {
+      "submit": "Sign Up",
+      "accountAlreadyExists": "Already have an account?"
+    },
+    "inputs": {
+      "name": {
+        "label": "User Name",
+        "validation": {
+          "required": "User Name is required",
+          "server": {
+            "Required": "User Name is required"
+        }
+        }
+      },
+      "businessName": {
+        "label": "Business Name",
+        "validation": {
+          "required": "Business Name is required",
+          "server": {
+            "Required": "Business Name is required",
+            "USER_NAME_EXISTED": "Business name already exists"
+        }
+        }
+      },
+      "email": {
+        "label": "Email",
+        "validation": {
+          "required": "Email is required",
+          "invalid": "Email is not valid",
+          "server": {
+            "EMAIL_EXISTED": "Email already exists",
+            "Required": "Email is required"
+          }
+        }
+      },
+      "password": {
+        "label": "Password",
+        "validation": {
+          "required": "Password is required",
+          "min": "Password must be at least 6 characters long",
+          "server": {
+            "incorrectPassword": "Password is not valid",
+            "Required": "Password is required"
+          }
+        }
+      }
+    }
+}
+  

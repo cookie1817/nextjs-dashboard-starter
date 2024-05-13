@@ -1,0 +1,33 @@
+{
+    "login": "Login",
+    "submit": "submit",
+    "inputs": {
+        "email": {
+          "label": "Email",
+          "validation": {
+            "required": "Email is required",
+            "invalid": "Email is not valid",
+            "server": {
+              "emailNotExists": "Email does not exist",
+              "WRONG_EMAIL_AND_PASSWORD": "Email is not valid"
+            }
+          }
+        },
+        "password": {
+          "label": "Password",
+          "validation": {
+            "required": "Password is required",
+            "min": "Password must be at least 6 characters long",
+            "server": {
+              "incorrectPassword": "Password is not valid",
+              "WRONG_EMAIL_AND_PASSWORD": "Password is not valid"
+            }
+          }
+        }
+    },
+    "actions": {
+        "submit": "Sign In",
+        "createAccount": "Create Account",
+        "forgotPassword": "Forgot Password?"
+    }
+ }

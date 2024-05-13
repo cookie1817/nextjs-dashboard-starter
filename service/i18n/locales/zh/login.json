@@ -1,0 +1,32 @@
+{
+    "login": "登入",
+    "inputs": {
+        "email": {
+          "label": "電子信箱",
+          "validation": {
+            "required": "請輸入電子信箱",
+            "invalid": "糗輸入有效的電子信箱格式",
+            "server": {
+              "emailNotExists": "此電子信箱並不存在",
+              "WRONG_EMAIL_AND_PASSWORD": "電子信箱錯誤"
+            }
+          }
+        },
+        "password": {
+          "label": "密碼",
+          "validation": {
+            "required": "請輸入密碼",
+            "min": "密碼長度必須大於6位數",
+            "server": {
+              "incorrectPassword": "密碼錯誤",
+              "WRONG_EMAIL_AND_PASSWORD": "密碼錯誤"
+            }
+          }
+        }
+    },
+    "actions": {
+        "submit": "登入",
+        "createAccount": "註冊帳號",
+        "forgotPassword": "忘記密碼?"
+    }
+}
