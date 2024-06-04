@@ -1,5 +1,6 @@
 'use client'
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import * as yup from "yup";
 import { useForm, FormProvider, useFormState } from "react-hook-form";
 import { useTranslation } from "@/service/i18n/client";
@@ -23,6 +24,7 @@ import FormTextInput from "@/components/form/text-input/form-text-input";
 import WelcomePageLayout from "@/components/welcome";
 
 import { HTTP_CODES_ENUM, ErrorCodes} from "@/service/api/types/http-codes";
+import useLanguage from "@/service/i18n/use-language";
 
 type SignInFormData = {
   email: string;
@@ -72,6 +74,8 @@ function FormActions() {
 
 export const Login = () => {
   const { t } = useTranslation("login");
+  const router = useRouter();
+  const language = useLanguage();
   const validationSchema = useValidationSchema();
   const { enqueueSnackbar } = useSnackbar();
   const fetchAuthLogin = useAuthLoginService();
@@ -117,13 +121,13 @@ export const Login = () => {
     }
 
     if (status === HTTP_CODES_ENUM.OK) {
-      console.log('data', data)
       setTokensInfo({
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,
         tokenExpires: data.tokenExpires,
       });
       setUser(data.user);
+      router.push('/' + language + '/dashboard');
     }
   });
 

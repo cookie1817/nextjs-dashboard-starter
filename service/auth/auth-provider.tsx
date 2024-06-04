@@ -22,7 +22,7 @@ import { AUTH_SIGNOUT_URL, AUTH_USER_INFO_URL } from "@/service/api/config";
 import { HTTP_CODES_ENUM } from "../api/types/http-codes";
 
 function AuthProvider(props: PropsWithChildren<{}>) {
-  const AUTH_TOKEN_KEY = "auth-token-data";
+  const AUTH_TOKEN_KEY = process.env.AUTH_TOKEN_KEY || "auth-token-data";
   const [isLoaded, setIsLoaded] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const tokensInfoRef = useRef<Tokens>({
@@ -94,7 +94,7 @@ function AuthProvider(props: PropsWithChildren<{}>) {
         );
 
         if (response.status === HTTP_CODES_ENUM.UNAUTHORIZED) {
-          logOut();
+          // logOut();
           return;
         }
 
@@ -102,7 +102,7 @@ function AuthProvider(props: PropsWithChildren<{}>) {
         setUser(data);
       }
     } catch {
-      logOut();
+      // logOut();
     } finally {
       setIsLoaded(true);
     }

@@ -1,0 +1,29 @@
+{
+    "verifyEmail": "驗證電子信箱",
+    "notReceivedOtpCode": "沒收到OTP碼?",
+    "actions": {
+      "resend": "重新發送",
+      "verify": "認證"
+    },
+    "inputs": {
+      "emailOtpCode": {
+        "label": "OTP",
+        "validation": {
+          "length": "OTP碼為六位數",
+          "required": "請輸入OTP碼",
+          "digitsOnly": "OTP碼應為數字",
+          "server": {
+            "OTP_CODE_NOT_MATCH": "OTP碼無效",
+            "OTP_EXPIRED": "OTP碼已過期, 已傳送新的OTP碼到您的電子信箱",
+            "TOO_MANY_REQUEST": "請於30秒後重試"
+          }
+        }
+      }
+    },
+    "alerts": {
+      "tryLatter": "請於30秒後重試",
+      "success": "新的OTP碼已寄送到您的電子信箱, 請在五分鐘內完成認證",
+      "verified": "您的電子信箱已驗證"
+    }
+  }
+  

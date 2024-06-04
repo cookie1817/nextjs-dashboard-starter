@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import useFetchBase from "../use-fetch-base";
 import useFetch from "../use-fetch";
-import { AUTH_SIGIN_URL, AUTH_SIGUP_URL, AUTH_USER_INFO_URL } from "../config";
+import { AUTH_SIGIN_URL, AUTH_SIGUP_URL, AUTH_USER_INFO_URL, AUTH_OTP, AUTH_OTP_RESEND } from "../config";
 import { User } from "../types/user";
 import { Tokens } from "../types/tokens";
 import wrapperFetchJsonResponse from "../wrapper-fetch-json-response";
@@ -52,26 +52,40 @@ export function useAuthSignUpService() {
   );
 }
 
-// export type AuthConfirmEmailRequest = {
-//   hash: string;
-// };
+export type AuthEmailOtpRequest = {
+  emailOtpCode: string;
+};
 
-// export type AuthConfirmEmailResponse = void;
+export type AuthEmailOtpResponse = void;
 
-// export function useAuthConfirmEmailService() {
-//   const fetchBase = useFetchBase();
+export function useAuthEmailOtpService() {
+  const fetchBase = useFetch();
 
-//   return useCallback(
-//     (data: AuthConfirmEmailRequest, requestConfig?: RequestConfigType) => {
-//       return fetchBase(`${API_URL}/v1/auth/email/confirm`, {
-//         method: "POST",
-//         body: JSON.stringify(data),
-//         ...requestConfig,
-//       }).then(wrapperFetchJsonResponse<AuthConfirmEmailResponse>);
-//     },
-//     [fetchBase]
-//   );
-// }
+  return useCallback(
+    (data: AuthEmailOtpRequest) => {
+      return fetchBase(`${AUTH_OTP}`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      }).then(wrapperFetchJsonResponse<AuthLoginResponse>);
+    },
+    [fetchBase]
+  );
+}
+
+export type AuthEmailOtpResendResponse = void;
+
+export function useAuthEmailOtpResendService() {
+  const fetchBase = useFetch();
+
+  return useCallback(
+    () => {
+      return fetchBase(`${AUTH_OTP_RESEND}`, {
+        method: "GET",
+      }).then(wrapperFetchJsonResponse<AuthLoginResponse>);
+    },
+    [fetchBase]
+  );
+}
 
 // export type AuthConfirmNewEmailRequest = {
 //   hash: string;

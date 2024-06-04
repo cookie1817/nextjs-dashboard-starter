@@ -1,0 +1,29 @@
+{
+    "verifyEmail": "Email Verification",
+    "notReceivedOtpCode": "Didn't received OTP code?",
+    "actions": {
+      "resend": "Resend code",
+      "verify": "Verify"
+    },
+    "inputs": {
+      "emailOtpCode": {
+        "label": "OTP Code",
+        "validation": {
+          "length": "OTP code is 6-digits.",
+          "required": "OTP code is required",
+          "digitsOnly": "The code should have digits only",
+          "server": {
+            "OTP_CODE_NOT_MATCH": "Invaild OTP Code",
+            "OTP_EXPIRED": "OTP Code Expired, resend to your email.",
+            "TOO_MANY_REQUEST": "Too many request, please try it after 30 seconds."
+          }
+        }
+      }
+    },
+    "alerts": {
+      "tryLatter": "Please try it after 30 seconds.",
+      "success": "New OTP Code has been sent to your email, please verify with in 5 mins.",
+      "verified": "Your email has been verified."
+    }
+  }
+  

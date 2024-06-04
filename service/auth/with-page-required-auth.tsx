@@ -22,7 +22,7 @@ function withPageRequiredAuth(
   Component: FunctionComponent<PropsType>,
   options?: OptionsType
 ) {
-  const optionRoles = options?.roles || roles;
+  // const optionRoles = options?.roles || roles;
 
   return function WithPageRequiredAuth(props: PropsType) {
     const { user, isLoaded } = useAuth();
@@ -31,10 +31,13 @@ function withPageRequiredAuth(
 
     useEffect(() => {
       const check = () => {
+        console.log("useruseruser0000", user)
         if (
-          (user &&
-            user?.role?.id &&
-            optionRoles.includes(Number(user?.role.id))) ||
+          (user 
+            // &&
+            // user?.role?.id &&
+            // optionRoles.includes(Number(user?.role.id))
+            ) ||
           !isLoaded
         )
           return;
@@ -49,6 +52,7 @@ function withPageRequiredAuth(
 
         let redirectTo = `/${language}/login?${params.toString()}`;
 
+        console.log("useruseruser", user)
         if (user) {
           redirectTo = `/${language}/dashboard`;
         }
@@ -59,9 +63,13 @@ function withPageRequiredAuth(
       check();
     }, [user, isLoaded, router, language]);
 
-    return user &&
-      user?.role?.id &&
-      optionRoles.includes(Number(user?.role.id)) ? (
+    console.log("useruseruser2", user)
+
+    return user 
+    // &&
+    //   user?.role?.id &&
+    //   optionRoles.includes(Number(user?.role.id))
+       ? (
       <Component {...props} />
     ) : null;
   };

@@ -144,5 +144,4 @@ function ForgotPassword() {
   return <Form />;
 }
 
-// export default withPageRequiredGuest(ForgotPassword);
 export default ForgotPassword;

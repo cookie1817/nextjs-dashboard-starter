@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from 'next/navigation';
 import { useForm, FormProvider, useFormState } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,6 +24,7 @@ import Box from "@mui/material/Box";
 // import withPageRequiredGuest from "@/services/auth/with-page-required-guest";
 import { HTTP_CODES_ENUM, ErrorCodes} from "@/service/api/types/http-codes";
 import { useTranslation } from "@/service/i18n/client";
+import useLanguage from "@/service/i18n/use-language";
 
 
 type SignUpFormData = {
@@ -88,6 +90,9 @@ function Form() {
   const { t } = useTranslation("signup");
   const validationSchema = useValidationSchema();
 
+  const router = useRouter();
+  const language = useLanguage();
+
   const methods = useForm<SignUpFormData>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -148,11 +153,13 @@ function Form() {
 
     if (statusSignIn === HTTP_CODES_ENUM.OK) {
       setTokensInfo({
-        token: dataSignIn.token,
+        accessToken: dataSignIn.accessToken,
         refreshToken: dataSignIn.refreshToken,
         tokenExpires: dataSignIn.tokenExpires,
       });
       setUser(dataSignIn.user);
+
+      router.push('/' + language + '/dashboard');
     }
   });
 

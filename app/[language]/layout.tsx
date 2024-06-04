@@ -5,6 +5,7 @@ import { dir } from "i18next";
 import CssBaseline from "@mui/material/CssBaseline";
 import "@/service/i18n/config";
 import { languages } from "@/service/i18n/config";
+import AuthProvider from "@/service/auth/auth-provider";
 import StoreLanguageProvider from "@/service/i18n/store-language-provider";
 import InitColorSchemeScript from "@/components/theme/init-color-scheme-script";
 import ThemeProvider from "@/components/theme/theme-provider";
@@ -24,13 +25,6 @@ export const metadata: Metadata = {
 }
 
 
-// export async function generateMetadata({ params }: Props): Promise<Metadata> {
-//   const { t } = await getServerTranslation(params.language, "common");
-
-//   return {
-//     title: t("title"),
-//   };
-// }
 
 export function generateStaticParams() {
   return languages.map((language) => ({ language }));
@@ -51,7 +45,9 @@ export default function RootLayout({
           <CssBaseline />
           <SnackbarProvider maxSnack={3} autoHideDuration={3000} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
             <StoreLanguageProvider>
+              <AuthProvider>
                 {children}
+              </AuthProvider>
             </StoreLanguageProvider>
           </SnackbarProvider>
         </ThemeProvider>
