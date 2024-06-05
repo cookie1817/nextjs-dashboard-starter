@@ -15,9 +15,11 @@ export const AuthContext = createContext<{
 });
 
 export const AuthActionsContext = createContext<{
+  user: React.MutableRefObject<User> | null
   setUser: (user: User) => void;
   logOut: () => Promise<void>;
 }>({
+  user: null,
   setUser: () => {},
   logOut: async () => {},
 });

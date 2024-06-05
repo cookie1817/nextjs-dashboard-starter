@@ -12,21 +12,22 @@ interface Props {
 }
 
 export const NavbarWrapper = ({ children }: Props) => {
+  
   return (
     <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
       <Navbar
         isBordered
         className="w-full"
         classNames={{
-          wrapper: "w-full max-w-full",
+          wrapper: "w-full max-w-full justify-end",
         }}
       >
         <NavbarContent className="md:hidden">
           <BurguerButton />
         </NavbarContent>
         <NavbarContent
-          justify="start"
-          className="w-fit data-[justify=start]:flex-grow-0"
+          justify="end"
+          className="w-fit data-[justify=end]:flex-grow-0"
         >
           <div className="flex items-center gap-2 max-md:hidden">
             <FeedbackIcon />

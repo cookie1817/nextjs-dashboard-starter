@@ -11,12 +11,16 @@ import React from "react";
 import { useRouter } from 'next/navigation';
 import { useAuthSignOutService } from "@/service/api/services/auth";
 import useLanguage from "@/service/i18n/use-language";
+import useAuth from "@/service/auth/use-auth";
+import { useTranslation } from "@/service/i18n/client";
 
 import { DarkModeSwitch } from "./darkmodeswitch";
 
 export const UserDropdown = () => {
   const router = useRouter();
   const language = useLanguage();
+  const { user, isLoaded } = useAuth();
+  const { t } = useTranslation("common");
   const fetchAuthSignOut = useAuthSignOutService();
 
   return (
@@ -40,7 +44,7 @@ export const UserDropdown = () => {
           className="flex flex-col justify-start w-full items-start"
         >
           <p>Signed in as</p>
-          <p>zoey@example.com</p>
+          <p>{user?.email}</p>
         </DropdownItem>
         <DropdownItem key="settings">My Settings</DropdownItem>
         <DropdownItem key="team_settings">Team Settings</DropdownItem>
