@@ -39,6 +39,19 @@
         "label": "密碼",
         "validation": {
           "required": "請輸入密碼",
+          "notMatched": "輸入的密碼不一致",
+          "min": "密碼長度必須大於6位數",
+          "server": {
+            "incorrectPassword": "密碼錯誤",
+            "Required": "請輸入密碼"
+          }
+        }
+      },
+      "passwordConfirmation": {
+        "label": "確認密碼",
+        "validation": {
+          "required": "請輸入密碼",
+          "notMatched": "輸入的密碼不一致",
           "min": "密碼長度必須大於6位數",
           "server": {
             "incorrectPassword": "密碼錯誤",

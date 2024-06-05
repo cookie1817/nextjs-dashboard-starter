@@ -32,6 +32,7 @@ type SignUpFormData = {
   business_name: string;
   email: string;
   password: string;
+  comfirmedPassword: string;
 };
 
 const useValidationSchema = () => {
@@ -52,6 +53,8 @@ const useValidationSchema = () => {
       .string()
       .min(6, t("signup:inputs.password.validation.min"))
       .required(t("signup:inputs.password.validation.required")),
+    passwordConfirmation: yup.string()
+      .oneOf([yup.ref('password'), undefined], t("signup:inputs.password.validation.notMatched"))
   });
 };
 
@@ -206,6 +209,15 @@ function Form() {
                   label={t("signup:inputs.password.label")}
                   type="password"
                   testId="password"
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormTextInput<SignUpFormData>
+                  name="passwordConfirmation"
+                  label={t("signup:inputs.passwordConfirmation.label")}
+                  type="password"
+                  testId="comfirmedPassword"
                 />
               </Grid>
 

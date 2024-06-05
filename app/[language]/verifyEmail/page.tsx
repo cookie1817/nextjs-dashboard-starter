@@ -13,7 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useSnackbar } from "notistack";
 import { useAuthEmailOtpService, useAuthEmailOtpResendService } from "@/service/api/services/auth";
-import { HTTP_CODES_ENUM, ErrorCodes} from "@/service/api/types/http-codes";
+import { HTTP_CODES_ENUM } from "@/service/api/types/http-codes";
 import { useTranslation } from "@/service/i18n/client";
 import WelcomePageLayout from "@/components/welcome";
 

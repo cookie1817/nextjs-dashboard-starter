@@ -10,7 +10,7 @@ import {
 
 acceptLanguage.languages([...languages]);
 
-const authRoutes = ['login', 'forgotpassword', 'signup']
+const authRoutes = ['login', 'forgotpassword', 'signup', 'resetpassword']
 
 
 
@@ -51,10 +51,7 @@ export function middleware(req: NextRequest) {
   const auth = req.cookies.get(AUTH_TOKEN_KEY);
   const token = auth?.value;
 
-  console.log('token', token)
-
-  if (!auth && !authRoutes.some((authRoute) => authRoute === currentPathname) ||
-  (!token?.accessToken || token?.accessToken === "")) {
+  if (!auth && !authRoutes.some((authRoute) => authRoute === currentPathname)) {
     redirectURL = `/${language}/login`
   }
 
@@ -69,16 +66,13 @@ export function middleware(req: NextRequest) {
       return NextResponse.rewrite(new URL(`/${language}/verifyEmail`, req.url));
     }
 
-    // redirect to each page by auth status: isEmailVerify, resetPassword
+    // if (currentPathname === 'verifyEmail' && decodedToken.isEmailVerified && decodedToken) {
+    //   return NextResponse.rewrite(new URL(`/${language}/dashbaord`, req.url));
+    // }
+
   } catch (err) {
     console.log('err', err)
-    // redirectURL = `/${language}/login`
-    // return NextResponse.redirect(
-    //   new URL(
-    //     redirectURL,
-    //     req.url
-    //   )
-    // );
+    return NextResponse.rewrite(new URL(`/${language}/login`, req.url));
   }
 
   // if token is not valid, redirect to login page
@@ -92,12 +86,12 @@ export function middleware(req: NextRequest) {
   // TODO: redirecrt to dashboard or login page if url path not found
 
   if (redirectURL) {
-    // return NextResponse.redirect(
-    //   new URL(
-    //     redirectURL,
-    //     req.url
-    //   )
-    // );
+    return NextResponse.redirect(
+      new URL(
+        redirectURL,
+        req.url
+      )
+    );
   }
 
   

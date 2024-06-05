@@ -39,6 +39,19 @@
         "label": "Password",
         "validation": {
           "required": "Password is required",
+          "notMatched": "Passwords must match",
+          "min": "Password must be at least 6 characters long",
+          "server": {
+            "incorrectPassword": "Password is not valid",
+            "Required": "Password is required"
+          }
+        }
+      },
+      "passwordConfirmation": {
+        "label": "Password Confirmation",
+        "validation": {
+          "required": "Password is required",
+          "notMatched": "Passwords must match",
           "min": "Password must be at least 6 characters long",
           "server": {
             "incorrectPassword": "Password is not valid",

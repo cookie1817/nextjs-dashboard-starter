@@ -1,7 +1,15 @@
 import { useCallback } from "react";
 import useFetchBase from "../use-fetch-base";
 import useFetch from "../use-fetch";
-import { AUTH_SIGIN_URL, AUTH_SIGUP_URL, AUTH_USER_INFO_URL, AUTH_OTP, AUTH_OTP_RESEND } from "../config";
+import { 
+  AUTH_SIGIN_URL,
+  AUTH_SIGUP_URL,
+  AUTH_USER_INFO_URL,
+  AUTH_OTP,
+  AUTH_OTP_RESEND,
+  AUTH_FORGET_PASSWORD,
+  AUTH_RESET_PASSWORD
+} from "../config";
 import { User } from "../types/user";
 import { Tokens } from "../types/tokens";
 import wrapperFetchJsonResponse from "../wrapper-fetch-json-response";
@@ -87,69 +95,48 @@ export function useAuthEmailOtpResendService() {
   );
 }
 
-// export type AuthConfirmNewEmailRequest = {
-//   hash: string;
-// };
+export type AuthForgotPasswordRequest = {
+  email: string;
+};
 
-// export type AuthConfirmNewEmailResponse = void;
+export type AuthForgotPasswordResponse = void;
 
-// export function useAuthConfirmNewEmailService() {
-//   const fetchBase = useFetchBase();
+export function useAuthForgotPasswordService() {
+  const fetchBase = useFetchBase();
 
-//   return useCallback(
-//     (data: AuthConfirmNewEmailRequest, requestConfig?: RequestConfigType) => {
-//       return fetchBase(`${API_URL}/v1/auth/email/confirm/new`, {
-//         method: "POST",
-//         body: JSON.stringify(data),
-//         ...requestConfig,
-//       }).then(wrapperFetchJsonResponse<AuthConfirmNewEmailResponse>);
-//     },
-//     [fetchBase]
-//   );
-// }
+  return useCallback(
+    (data: AuthForgotPasswordRequest, requestConfig?: RequestConfigType) => {
+      return fetchBase(`${AUTH_FORGET_PASSWORD}`, {
+        method: "POST",
+        body: JSON.stringify(data),
+        ...requestConfig,
+      }).then(wrapperFetchJsonResponse<AuthForgotPasswordResponse>);
+    },
+    [fetchBase]
+  );
+}
 
-// export type AuthForgotPasswordRequest = {
-//   email: string;
-// };
+export type AuthResetPasswordRequest = {
+  password: string;
+  token: string;
+};
 
-// export type AuthForgotPasswordResponse = void;
+export type AuthResetPasswordResponse = void;
 
-// export function useAuthForgotPasswordService() {
-//   const fetchBase = useFetchBase();
+export function useAuthResetPasswordService() {
+  const fetchBase = useFetchBase();
 
-//   return useCallback(
-//     (data: AuthForgotPasswordRequest, requestConfig?: RequestConfigType) => {
-//       return fetchBase(`${API_URL}/v1/auth/forgot/password`, {
-//         method: "POST",
-//         body: JSON.stringify(data),
-//         ...requestConfig,
-//       }).then(wrapperFetchJsonResponse<AuthForgotPasswordResponse>);
-//     },
-//     [fetchBase]
-//   );
-// }
-
-// export type AuthResetPasswordRequest = {
-//   password: string;
-//   hash: string;
-// };
-
-// export type AuthResetPasswordResponse = void;
-
-// export function useAuthResetPasswordService() {
-//   const fetchBase = useFetchBase();
-
-//   return useCallback(
-//     (data: AuthResetPasswordRequest, requestConfig?: RequestConfigType) => {
-//       return fetchBase(`${API_URL}/v1/auth/reset/password`, {
-//         method: "POST",
-//         body: JSON.stringify(data),
-//         ...requestConfig,
-//       }).then(wrapperFetchJsonResponse<AuthResetPasswordResponse>);
-//     },
-//     [fetchBase]
-//   );
-// }
+  return useCallback(
+    (data: AuthResetPasswordRequest, requestConfig?: RequestConfigType) => {
+      return fetchBase(`${AUTH_RESET_PASSWORD}`, {
+        method: "POST",
+        body: JSON.stringify(data),
+        ...requestConfig,
+      }).then(wrapperFetchJsonResponse<AuthResetPasswordResponse>);
+    },
+    [fetchBase]
+  );
+}
 
 // export type AuthPatchMeRequest =
 //   | Partial<Pick<User, "firstName" | "lastName" | "email">>

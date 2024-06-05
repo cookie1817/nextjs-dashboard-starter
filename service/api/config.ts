@@ -7,5 +7,7 @@ export const AUTH_SIGUP_URL = API_URL + AUTH_API_PREFIX +  "/signup";
 export const AUTH_SIGNOUT_URL = API_URL + AUTH_API_PREFIX +  "/signout";
 export const AUTH_OTP = API_URL + AUTH_API_PREFIX + "/otp";
 export const AUTH_OTP_RESEND = API_URL + AUTH_API_PREFIX + "/resendotp";
+export const AUTH_FORGET_PASSWORD = API_URL + AUTH_API_PREFIX + "/forgetpassword";
+export const AUTH_RESET_PASSWORD = API_URL + AUTH_API_PREFIX + "/resetpassword";
 export const AUTH_REFRESH_URL = API_URL + AUTH_API_PREFIX + "/refresh";
 export const AUTH_USER_INFO_URL = API_URL + AUTH_API_PREFIX + "/user";

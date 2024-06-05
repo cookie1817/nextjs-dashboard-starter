@@ -1,11 +1,14 @@
 "use client";
 import Button from "@mui/material/Button";
+import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation'
 import { useForm, FormProvider, useFormState } from "react-hook-form";
-import { useAuthForgotPasswordService } from "@/service/api/services/auth";
+import { useAuthResetPasswordService } from "@/service/api/services/auth";
+import useLanguage from "@/service/i18n/use-language";
+
 import { useTheme } from '@mui/material/styles';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormTextInput from "@/components/form/text-input/form-text-input";
 import Link from '@/components/link';
@@ -17,23 +20,25 @@ import { useTranslation } from "@/service/i18n/client";
 
 import WelcomePageLayout from "@/components/welcome";
 
-type ForgotPasswordFormData = {
-  email: string;
+type ResetPasswordFormData = {
+  password: string;
 };
 
 const useValidationSchema = () => {
-  const { t } = useTranslation("forgot_password");
+  const { t } = useTranslation("reset_password");
 
   return yup.object().shape({
-    email: yup
+    password: yup
       .string()
-      .email(t("forgot_password:inputs.email.validation.invalid"))
-      .required(t("forgot_password:inputs.email.validation.required")),
+      .min(6, t("reset_password:inputs.password.validation.min"))
+      .required(t("reset_password:inputs.password.validation.required")),
+    passwordConfirmation: yup.string()
+      .oneOf([yup.ref('password'), undefined], t("reset_password:inputs.password.validation.notMatched"))
   });
 };
 
 function FormActions() {
-  const { t } = useTranslation("forgot_password");
+  const { t } = useTranslation("reset_password");
   const { isSubmitting } = useFormState();
   const theme = useTheme();
 
@@ -53,49 +58,49 @@ function FormActions() {
         },
       }}
     >
-      {t("forgot_password:actions.submit")}
+      {t("reset_password:actions.submit")}
     </Button>
   );
 }
 
 function Form() {
   const { enqueueSnackbar } = useSnackbar();
-  const fetchAuthForgotPassword = useAuthForgotPasswordService();
-  const { t } = useTranslation("forgot_password");
+  const router = useRouter();
+  const language = useLanguage();
+  const searchParams = useSearchParams()
+  const token = searchParams.get('token') || ''
+  const fetchAuthResetPassword = useAuthResetPasswordService();
+  const { t } = useTranslation("reset_password");
   const validationSchema = useValidationSchema();
 
-  const methods = useForm<ForgotPasswordFormData>({
+  const methods = useForm<ResetPasswordFormData>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      email: "",
+      password: "",
+      token
     },
   });
+
 
   const { handleSubmit, setError } = methods;
 
   const onSubmit = handleSubmit(async (formData) => {
-    const { data, status } = await fetchAuthForgotPassword(formData);
+    const { data, status } = await fetchAuthResetPassword(formData);
 
-    if (status === HTTP_CODES_ENUM.NOT_FOUND) {
-      // User Not Found 
-      setError('email', {
-        type: "manual",
-        message: t("forgot_password:inputs.email.validation.server.emailNotExists")
+    if (status === HTTP_CODES_ENUM.UNAUTHORIZED) {
+      // UNAUTHORIZED, INVALID_TOKEN
+      enqueueSnackbar(t("reset_password:alerts.UNAUTHORIZED"), {
+        variant: "error",
       });
+      router.push('/' + language + '/dashboard');
       return;
-    } else if (status === HTTP_CODES_ENUM.UNAUTHORIZED) {
-      // EMAIL_NOT_VERIFIED
-      setError('email', {
-        type: "manual",
-        message: t("forgot_password:inputs.email.validation.server.emailNotVerified")
-      });
-      return;
-    } 
+    };
 
-    if (status === HTTP_CODES_ENUM.CREATED) {
-      enqueueSnackbar(t("forgot_password:alerts.success"), {
+    if (status === HTTP_CODES_ENUM.OK) {
+      enqueueSnackbar(t("reset_password:alerts.success"), {
         variant: "success",
       });
+      router.push('/' + language + '/dashboard');
     }
 
   });
@@ -107,19 +112,28 @@ function Form() {
             <form onSubmit={onSubmit}>
             <Grid container spacing={2} mb={2}>
                 <Grid item xs={12} mt={3}>
-                <Typography variant="h6">{t("forgot_password:forgotPassword")}</Typography>
+                <Typography variant="h6">{t("reset_password:resetPassword")}</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                <FormTextInput<ForgotPasswordFormData>
-                    name="email"
-                    label={t("forgot_password:inputs.email.label")}
-                    type="email"
-                    testId="email"
+                <FormTextInput<ResetPasswordFormData>
+                  name="password"
+                  label={t("reset_password:inputs.password.label")}
+                  type="password"
+                  testId="password"
                 />
-                </Grid>
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormTextInput<ResetPasswordFormData>
+                  name="passwordConfirmation"
+                  label={t("reset_password:inputs.passwordConfirmation.label")}
+                  type="password"
+                  testId="comfirmedPassword"
+                />
+              </Grid>
 
                 <Grid item xs={12}>
-                <FormActions />
+                  <FormActions />
                 </Grid>
 
                 <Grid item xs={12}>
@@ -130,9 +144,10 @@ function Form() {
                         href="/login"
                         data-testid="login"
                     >
-                        {t("forgot_password:actions.back")}
+                        {t("reset_password:actions.back")}
                     </Button>
                 </Grid>
+
             </Grid>
             </form>
         </Container>
@@ -141,8 +156,8 @@ function Form() {
   );
 }
 
-function ForgotPassword() {
+function ResetPassword() {
   return <Form />;
 }
 
-export default ForgotPassword;
+export default ResetPassword;
