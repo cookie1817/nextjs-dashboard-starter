@@ -54,22 +54,6 @@ function AuthProvider(props: PropsWithChildren<{}>) {
     [setTokensInfoRef]
   );
 
-  const logOut = useCallback(async () => {
-    if (tokensInfoRef.current.accessToken) {
-      await fetchBase(
-        AUTH_SIGNOUT_URL,
-        {
-          method: "POST",
-        },
-        {
-          accessToken: tokensInfoRef.current.accessToken,
-          refreshToken: tokensInfoRef.current.refreshToken,
-          tokenExpires: tokensInfoRef.current.tokenExpires,
-        }
-      );
-    }
-    setTokensInfo(null);
-  }, [setTokensInfo, fetchBase]);
 
   const loadData = useCallback(async () => {
     const tokens = JSON.parse(
@@ -106,7 +90,7 @@ function AuthProvider(props: PropsWithChildren<{}>) {
     } finally {
       setIsLoaded(true);
     }
-  }, [fetchBase, logOut, setTokensInfoRef, setTokensInfo]);
+  }, [fetchBase, setTokensInfoRef, setTokensInfo]);
 
   useEffect(() => {
     loadData();
@@ -123,9 +107,10 @@ function AuthProvider(props: PropsWithChildren<{}>) {
   const contextActionsValue = useMemo(
     () => ({
       setUser,
-      logOut,
+      // logOut,
     }),
-    [logOut]
+    // [logOut]
+    []
   );
 
   const contextTokensValue = useMemo(

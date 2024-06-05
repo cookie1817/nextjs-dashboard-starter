@@ -8,10 +8,12 @@ import {
   AUTH_OTP,
   AUTH_OTP_RESEND,
   AUTH_FORGET_PASSWORD,
-  AUTH_RESET_PASSWORD
+  AUTH_RESET_PASSWORD,
+  AUTH_SIGNOUT_URL
 } from "../config";
 import { User } from "../types/user";
 import { Tokens } from "../types/tokens";
+import useAuthTokens from "@/service/auth/use-auth-tokens";
 import wrapperFetchJsonResponse from "../wrapper-fetch-json-response";
 import { RequestConfigType } from "./types/request-config";
 
@@ -137,6 +139,24 @@ export function useAuthResetPasswordService() {
     [fetchBase]
   );
 }
+
+export type AuthSignOutResponse = void;
+
+export function useAuthSignOutService() {
+  const fetchBase = useFetch();
+  const { setTokensInfo } = useAuthTokens();
+
+  return useCallback(
+    () => {
+      setTokensInfo(null);
+      return fetchBase(`${AUTH_SIGNOUT_URL}`, {
+        method: "POST",
+      }).then(wrapperFetchJsonResponse<AuthSignOutResponse>);
+    },
+    [fetchBase]
+  );
+}
+
 
 // export type AuthPatchMeRequest =
 //   | Partial<Pick<User, "firstName" | "lastName" | "email">>

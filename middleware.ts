@@ -48,6 +48,7 @@ export function middleware(req: NextRequest) {
   const AUTH_TOKEN_KEY = process.env.AUTH_TOKEN_KEY || "auth-token-data";
 
   // check if token in cookie is present
+  console.log('cookie', req.cookies)
   const auth = req.cookies.get(AUTH_TOKEN_KEY);
   const token = auth?.value;
 
@@ -56,25 +57,26 @@ export function middleware(req: NextRequest) {
   }
 
 
-  // verify token
-  let decodedToken;
-  try {
-    const accessToken = JSON.parse(token).accessToken
-    decodedToken = decode(accessToken)
-    console.log('decodedToken', decodedToken)
-    if (decodedToken && !decodedToken.isEmailVerified) {
-      return NextResponse.rewrite(new URL(`/${language}/verifyEmail`, req.url));
+  if (token) {
+    // verify token
+    let decodedToken;
+    try {
+      const accessToken = JSON.parse(token).accessToken
+      decodedToken = decode(accessToken)
+      console.log('decodedToken', decodedToken)
+      if (decodedToken && !decodedToken.isEmailVerified) {
+        return NextResponse.rewrite(new URL(`/${language}/verifyEmail`, req.url));
+      }
+
+      // if (currentPathname === 'verifyEmail' && decodedToken.isEmailVerified && decodedToken) {
+      //   return NextResponse.rewrite(new URL(`/${language}/dashbaord`, req.url));
+      // }
+
+    } catch (err) {
+      console.log('middleware err', err)
+      return NextResponse.rewrite(new URL(`/${language}/login`, req.url));
     }
-
-    // if (currentPathname === 'verifyEmail' && decodedToken.isEmailVerified && decodedToken) {
-    //   return NextResponse.rewrite(new URL(`/${language}/dashbaord`, req.url));
-    // }
-
-  } catch (err) {
-    console.log('err', err)
-    return NextResponse.rewrite(new URL(`/${language}/login`, req.url));
   }
-
   // if token is not valid, redirect to login page
   // if (!decodedToken) {
   //   console.log("Token is null or undefined");

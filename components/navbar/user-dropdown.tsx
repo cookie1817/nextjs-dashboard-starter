@@ -8,9 +8,17 @@ import {
   NavbarItem,
 } from "@nextui-org/react";
 import React from "react";
+import { useRouter } from 'next/navigation';
+import { useAuthSignOutService } from "@/service/api/services/auth";
+import useLanguage from "@/service/i18n/use-language";
+
 import { DarkModeSwitch } from "./darkmodeswitch";
 
 export const UserDropdown = () => {
+  const router = useRouter();
+  const language = useLanguage();
+  const fetchAuthSignOut = useAuthSignOutService();
+
   return (
     <Dropdown>
       <NavbarItem>
@@ -40,7 +48,10 @@ export const UserDropdown = () => {
         <DropdownItem key="system">System</DropdownItem>
         <DropdownItem key="configurations">Configurations</DropdownItem>
         <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-        <DropdownItem key="logout" color="danger" className="text-danger ">
+        <DropdownItem onPress={async () => {
+          await fetchAuthSignOut();
+          router.push('/' + language + '/dashboard');
+        }} key="logout" color="danger" className="text-danger ">
           Log Out
         </DropdownItem>
         <DropdownItem key="switch">
