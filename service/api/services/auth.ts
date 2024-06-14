@@ -4,12 +4,12 @@ import useFetch from "../use-fetch";
 import { 
   AUTH_SIGIN_URL,
   AUTH_SIGUP_URL,
-  AUTH_USER_INFO_URL,
   AUTH_OTP,
   AUTH_OTP_RESEND,
   AUTH_FORGET_PASSWORD,
   AUTH_RESET_PASSWORD,
-  AUTH_SIGNOUT_URL
+  AUTH_SIGNOUT_URL,
+  USER_INFO_URL
 } from "../config";
 import { User } from "../types/user";
 import { Tokens } from "../types/tokens";
@@ -186,7 +186,7 @@ export function useAuthGetMeService() {
 
   return useCallback(
     (requestConfig?: RequestConfigType) => {
-      return fetch(`${AUTH_USER_INFO_URL}`, {
+      return fetch(`${USER_INFO_URL}`, {
         method: "GET",
         ...requestConfig,
       }).then(wrapperFetchJsonResponse<AuthGetMeResponse>);

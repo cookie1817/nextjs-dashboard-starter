@@ -18,7 +18,7 @@ import {
 } from "./auth-context";
 import Cookies from "js-cookie";
 import useFetchBase from "@/service/api/use-fetch-base";
-import { AUTH_SIGNOUT_URL, AUTH_USER_INFO_URL } from "@/service/api/config";
+import { AUTH_SIGNOUT_URL, USER_INFO_URL } from "@/service/api/config";
 import { HTTP_CODES_ENUM } from "../api/types/http-codes";
 
 function AuthProvider(props: PropsWithChildren<{}>) {
@@ -65,7 +65,7 @@ function AuthProvider(props: PropsWithChildren<{}>) {
     try {
       if (tokens?.accessToken) {
         const response = await fetchBase(
-          AUTH_USER_INFO_URL,
+          USER_INFO_URL,
           {
             method: "GET",
           },

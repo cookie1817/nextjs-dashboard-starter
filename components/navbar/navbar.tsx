@@ -7,6 +7,8 @@ import { BurguerButton } from "./burguer-button";
 import { NotificationsDropdown } from "./notifications-dropdown";
 import { UserDropdown } from "./user-dropdown";
 
+import LanguageSwitcher from '@/components/languageSwitcher';
+
 interface Props {
   children: React.ReactNode;
 }
@@ -35,6 +37,8 @@ export const NavbarWrapper = ({ children }: Props) => {
           </div>
 
           <NotificationsDropdown />
+
+          <LanguageSwitcher />
 
           <div className="max-md:hidden">
             <SupportIcon />

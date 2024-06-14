@@ -4,7 +4,7 @@ import { PropsWithChildren } from "react";
 import Image from 'next/image';
 import Box from "@mui/material/Box";
 
-import ThemeSwitchButton from '@/components/themeSwitchButton';
+import { DarkModeSwitch } from '@/components/navbar/darkmodeswitch';
 import LanguageSwitcher from '@/components/languageSwitcher';
 
 // assets
@@ -21,8 +21,8 @@ function Provider(props: PropsWithChildren<{}>) {
       <div className="flex-1 block">
         <div className="flex items-center justify-end">
           <Box className="px-12 pt-1" display="flex" alignItems="center">
-            <LanguageSwitcher />
-            <ThemeSwitchButton />
+            <LanguageSwitcher customStyle='mr-8'/>
+            <DarkModeSwitch />
           </Box>
         </div>
         <div className="flex-1 flex items-center justify-center w-full h-5/6">

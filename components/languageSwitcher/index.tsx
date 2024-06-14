@@ -9,9 +9,11 @@ import useLanguage from "@/service/i18n/use-language";
 import useStoreLanguageActions from "@/service/i18n/use-store-language-actions";
 import { fallbackLanguage, languageLabels } from "@/service/i18n/config";
 
+interface Props {
+  customStyle: string;
+}
 
-
-export default function LanguageSwitcher() {
+export default function LanguageSwitcher({ customStyle }: Props) {
     const currentPathname = usePathname();
     const router = useRouter();
     const language = useLanguage();
@@ -38,7 +40,7 @@ export default function LanguageSwitcher() {
       };
 
     return (
-        <Select className='mr-8' onChange={(event) => onToggleLanguageClick(event.target.value as string)} value={language}>
+        <Select className={customStyle} onChange={(event) => onToggleLanguageClick(event.target.value as string)} value={language}>
           {languageLabels.map((languageLabel) =>  
             <MenuItem
               key={languageLabel.key}
